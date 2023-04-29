@@ -1,3 +1,10 @@
+/*
+ * @Date: 2023-04-29 18:10:01
+ * @LastEditors: jinyuan
+ * @LastEditTime: 2023-04-29 19:02:38
+ * @FilePath: \umi_dva\config\config.js
+ */
+
 import { defineConfig } from '@umijs/max';
 import { routes } from './routes';
 const WebpackBar = require('webpackbar');

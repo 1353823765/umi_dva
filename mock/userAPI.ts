@@ -1,3 +1,10 @@
+/*
+ * @Date: 2023-04-29 18:10:01
+ * @LastEditors: jinyuan
+ * @LastEditTime: 2023-04-29 19:00:20
+ * @FilePath: \umi_dva\mock\userAPI.ts
+ */
+
 import mockjs from 'mockjs';
 const users = [
   { id: 0, name: 'Umi', nickName: 'U', gender: 'MALE' },

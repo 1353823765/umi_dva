@@ -1,3 +1,10 @@
+/*
+ * @Date: 2023-04-29 18:10:01
+ * @LastEditors: jinyuan
+ * @LastEditTime: 2023-04-29 19:02:52
+ * @FilePath: \umi_dva\config\routes.js
+ */
+
 //路由配置
 export const routes = [
   {
