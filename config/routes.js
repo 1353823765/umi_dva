@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:10:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-04-29 19:02:52
+ * @LastEditTime: 2023-04-30 14:31:56
  * @FilePath: \umi_dva\config\routes.js
  */
 
@@ -14,7 +14,7 @@ export const routes = [
   {
     name: '首页',
     path: '/home',
-    component: './home',
+    component: '@/pages/home',
   },
   {
     name: '学员管理',
