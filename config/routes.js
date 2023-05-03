@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:10:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-04-30 14:31:56
+ * @LastEditTime: 2023-05-02 14:01:49
  * @FilePath: \umi_dva\config\routes.js
  */
 
@@ -10,11 +10,13 @@ export const routes = [
   {
     path: '/',
     redirect: '/home',
+   
   },
   {
     name: '首页',
     path: '/home',
     component: '@/pages/home',
+ 
   },
   {
     name: '学员管理',
@@ -25,6 +27,7 @@ export const routes = [
         name: '学员列表',
         path: '/stumgt/list',
         component: './tasklist/stumgt/stumgt_list',
+       
       },
       {
         name: '发布学员',

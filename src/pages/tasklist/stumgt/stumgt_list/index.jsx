@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-01 16:50:40
+ * @LastEditTime: 2023-05-03 14:24:03
  * @FilePath: \umi_dva\src\pages\tasklist\stumgt\stumgt_list\index.jsx
  */
 
@@ -9,12 +9,15 @@ import { Button } from 'antd';
 
 import { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'umi';
+import { getlist } from '../../../../services/demo/user';
+
 const View = memo(() => {
   const dispatch = useDispatch(),
     { table_list } = useSelector((select) => select.stumgt_list);
-  console.log(table_list);
+  // console.log(table_list);
   useEffect(() => {
     getData();
+    getlist()
   }, []);
   return (
     <div>
