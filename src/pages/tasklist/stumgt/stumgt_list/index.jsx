@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-03 14:24:03
+ * @LastEditTime: 2023-05-05 17:22:10
  * @FilePath: \umi_dva\src\pages\tasklist\stumgt\stumgt_list\index.jsx
  */
 
@@ -16,7 +16,7 @@ const View = memo(() => {
     { table_list } = useSelector((select) => select.stumgt_list);
   // console.log(table_list);
   useEffect(() => {
-    getData();
+   // getData();
     getlist()
   }, []);
   return (
