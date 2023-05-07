@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-03 17:17:32
+ * @LastEditTime: 2023-05-06 13:49:15
  * @FilePath: \umi_dva\src\app.ts
  */
 // layout运行时配置
@@ -10,9 +10,10 @@
 
 import type { RequestConfig } from 'umi';
 import { errorHandler } from './utils/request';
-export async function getInitialState(): Promise<{ name: string }> {
-  return { name: '@umijs/max1111' };
-}
+// export async function getInitialState(): Promise<{ name: string }> {
+ 
+//   return { name: '@umijs/max1111' };
+// }
 export const layout = () => {
   return {
     //左侧图标默认图标

@@ -19,6 +19,8 @@
     "antd": "^5.4.0",
     "axios": "^1.4.0",
     "mockjs": "^1.1.0",
+    "particles-bg": "^2.5.5",
+    "react-particles": "^2.9.3",
     "umi-request": "^1.4.0",
     "webpackbar": "^5.0.2"
   },

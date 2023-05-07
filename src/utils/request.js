@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-02 14:22:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-05 17:18:56
+ * @LastEditTime: 2023-05-07 15:28:20
  * @FilePath: \umi_dva\src\utils\request.js
  */
 import { message } from 'antd';
@@ -25,9 +25,14 @@ export const errorHandler = (error) => {
         errorText = errorText + errors[key][0];
       }
     }
+    
     //验证400错误提示
     if (status === 400) {
       errorText = errorText + `${response.data.message}`;
+    }
+     //验证400错误提示
+     if (status === 401) {
+      errorText = `${errorText}:${response.status}没有权限访问`;
     }
     message.error(errorText);
   } else if (!response) {

@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:10:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-05 16:59:54
+ * @LastEditTime: 2023-05-07 16:19:54
  * @FilePath: \umi_dva\config\config.js
  */
 
@@ -38,4 +38,5 @@ export default defineConfig({
   proxy,
   //是否开启mock数据
   // mock: false,
+ 
 });
