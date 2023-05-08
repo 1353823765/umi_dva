@@ -2,7 +2,7 @@
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-08 17:24:10
+ * @LastEditTime: 2023-05-08 18:14:06
  * @FilePath: \umi_dva\src\app.ts
  */
 // layout运行时配置
