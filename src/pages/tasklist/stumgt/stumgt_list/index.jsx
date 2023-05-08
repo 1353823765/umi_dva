@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-05 17:22:10
+ * @LastEditTime: 2023-05-08 12:09:02
  * @FilePath: \umi_dva\src\pages\tasklist\stumgt\stumgt_list\index.jsx
  */
 
@@ -9,7 +9,8 @@ import { Button } from 'antd';
 
 import { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'umi';
-import { getlist } from '../../../../services/demo/user';
+import { getlist } from '../../../../services/user';
+
 
 const View = memo(() => {
   const dispatch = useDispatch(),

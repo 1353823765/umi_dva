@@ -1,7 +1,8 @@
+
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-06 13:49:15
+ * @LastEditTime: 2023-05-08 17:24:10
  * @FilePath: \umi_dva\src\app.ts
  */
 // layout运行时配置
@@ -9,18 +10,31 @@
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 
 import type { RequestConfig } from 'umi';
+import { history } from 'umi';
 import { errorHandler } from './utils/request';
-// export async function getInitialState(): Promise<{ name: string }> {
- 
-//   return { name: '@umijs/max1111' };
-// }
-export const layout = () => {
+
+//运行时初始化数据配置
+export async function getInitialState() {
+  return { islogin: false };
+}
+//运行时layout配置，初始化状态initialState通过getInitialState方法透传给运行时配置layout
+//自定义layout渲染
+export const layout = ({ initialState }) => {
+  const { location } = history
   return {
     //左侧图标默认图标
     logo: 'https://img.alicdn.com/tfs/TB1YHEpwUT1gK0jSZFhXXaAtVXa-28-27.svg',
     menu: {
       locale: false,
     },
+    onPageChange: () => {
+      //判断登入权限，判断用户状态来进行路由的权限管理
+      if (initialState && location.pathname !== '/login') {
+        history.push('/login')
+      }
+
+
+    }
   };
 };
 
@@ -30,7 +44,7 @@ export const request: RequestConfig = {
   errorConfig: {
     //异常处理
     errorHandler,
-    errorThrower() {},
+    errorThrower() { },
   },
   //请求拦截器注册
   requestInterceptors: [

@@ -1,10 +1,11 @@
 /*
  * @Date: 2023-05-07 16:00:21
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-07 17:19:37
+ * @LastEditTime: 2023-05-08 10:56:12
  * @FilePath: \umi_dva\src\pages\login\index.jsx
  */
-import { Button, Checkbox, Form, Input } from 'antd';
+import {  Button, Checkbox, Form, Input } from 'antd';
+
 import styles from "./index.less"
 const onFinish = (values) => {
   console.log('Success:', values);
@@ -12,20 +13,22 @@ const onFinish = (values) => {
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
 }
+
 const View = () => (
+
  <div className={styles.main}>
  <div className={styles.main_container}>
   <Form
     name="basic"
     labelCol={{
-      span: 8,
+      span: 16,
     }}
     wrapperCol={{
       span: 16,
     }}
     style={{
       maxWidth: 600,
-     margin:"auto",
+  
     }}
     initialValues={{
       remember: true,
@@ -35,7 +38,7 @@ const View = () => (
     autoComplete="off"
   >
     <Form.Item
-      label="Username"
+      label="用户名"
       name="username"
       rules={[
         {
@@ -48,7 +51,7 @@ const View = () => (
     </Form.Item>
 
     <Form.Item
-      label="Password"
+      label="密码"
       name="password"
       rules={[
         {
@@ -81,7 +84,11 @@ const View = () => (
         Submit
       </Button>
     </Form.Item>
-  </Form></div>
+  </Form>
+
+  
+  </div>
  </div>
+
 );
 export default View;

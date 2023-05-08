@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:10:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-07 16:19:16
+ * @LastEditTime: 2023-05-08 12:20:01
  * @FilePath: \umi_dva\config\routes.js
  */
 
@@ -17,6 +17,7 @@ export const routes = [
       name: '首页统计',
       path: '/home',
       component: '@/pages/home',
+    
      
     },
     {

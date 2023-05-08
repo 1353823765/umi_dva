@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:10:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-07 16:19:54
+ * @LastEditTime: 2023-05-08 16:41:51
  * @FilePath: \umi_dva\config\config.js
  */
 
@@ -9,6 +9,7 @@ import { defineConfig } from '@umijs/max';
 import { proxy } from './proxy';
 import { routes } from './routes';
 import { theme } from './theme';
+//构建时配置
 export default defineConfig({
   antd: {
     //antd配置
