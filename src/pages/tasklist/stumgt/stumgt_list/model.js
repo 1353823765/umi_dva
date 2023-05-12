@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-30 16:06:45
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-03 14:28:36
+ * @LastEditTime: 2023-05-10 18:54:48
  * @FilePath: \umi_dva\src\pages\tasklist\stumgt\stumgt_list\model.js
  */
 import { getList } from './service';
@@ -23,9 +23,10 @@ export default {
   //effect
   effects: {
     //获取数据方法
+   
     *GET_LIST({ pyload }, { put, call }) {
-      // console.log(pyload, '1111');
-
+       console.log(pyload, '1111');
+ 
       const { data } = yield call(getList);
       yield put({ type: 'updataState', pyload: { table_list: data } });
     },

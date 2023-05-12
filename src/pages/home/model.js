@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-07 14:42:05
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-07 15:36:48
+ * @LastEditTime: 2023-05-10 18:59:50
  * @FilePath: \umi_dva\src\pages\home\model.js
  */
 import { gethomelist } from './service';

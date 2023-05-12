@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:10:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-08 16:41:51
+ * @LastEditTime: 2023-05-09 12:02:52
  * @FilePath: \umi_dva\config\config.js
  */
 
@@ -39,5 +39,8 @@ export default defineConfig({
   proxy,
   //是否开启mock数据
   // mock: false,
+  codeSplitting: {
+    jsStrategy: 'granularChunks'
+  }
  
 });
