@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-07 16:00:21
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-12 19:56:20
+ * @LastEditTime: 2023-05-13 12:57:36
  * @FilePath: \umi_dva\src\pages\login\index.jsx
  */
 
@@ -93,6 +93,7 @@ console.log(loginusername)
             </Form.Item>
 
             <Form.Item
+            
               // label="密码"
               name="password"
               rules={[

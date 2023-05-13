@@ -4,7 +4,7 @@ import { useRequest } from 'node_modules/ahooks/lib/index';
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-12 18:38:31
+ * @LastEditTime: 2023-05-13 16:54:54
  * @FilePath: \umi_dva\src\app.ts
  */
 // layout运行时配置
@@ -72,10 +72,13 @@ export const request: RequestConfig = {
           headers: { common },
         } = options;
         //获取设置token
-        const token =  JSON.stringify(localStorage.getItem('access_token'))   ;
+        const token = JSON.stringify(localStorage.getItem("access_token"))       ;
         //设置请求头+token认证
+       
+      console.log();
         const ADDheadersToken = {
-          Authorization: `Bearer ${token}`,
+          Authorization:`Bearer ${token.substring(1,token.length-1)}`
+          ,
         };
 
         return {
@@ -89,6 +92,7 @@ export const request: RequestConfig = {
       },
       //错误处理
       // (error) => {
+      //   console.log(error);
       //   return Promise.reject(error);
       // },
     ],
@@ -105,8 +109,7 @@ export const request: RequestConfig = {
         // console.log(data.access_token)
 
 
-        if(status===200){
-
+        if(status===200&&data.access_token){
           history.push("./")
            localStorage.setItem('access_token', data.access_token)
         }

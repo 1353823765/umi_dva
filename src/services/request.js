@@ -1,16 +1,18 @@
 /*
  * @Date: 2023-05-02 14:22:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-12 18:38:34
+ * @LastEditTime: 2023-05-13 16:31:30
  * @FilePath: \umi_dva\src\services\request.js
  */
 import { message } from 'antd';
 import { codeMessage } from './helper'
 //异常处理
 export const errorHandler = (error) => {
-
+ console.log(error)
   const { response } = error,
     //status状态吗
+
+  
     { status } = response;
     console.log(response)
 
