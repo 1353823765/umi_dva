@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-07 14:42:05
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-10 18:59:50
+ * @LastEditTime: 2023-05-14 14:52:54
  * @FilePath: \umi_dva\src\pages\home\model.js
  */
 import { gethomelist } from './service';
@@ -23,10 +23,9 @@ export default {
   //处理异步
   effects: {
     //获取数据
-    *GET_LIST({ pyload }, { put, call }) {
-      const { data } = yield call(gethomelist);
-      console.log(data);
-      console.log(pyload);
+   
+    *GET_LIST({ pyload }, { put, call }) { 
+      const  data  = yield call(gethomelist);
       yield put({ type: 'updataState', pyload: { table_list: data } });
     },
   },

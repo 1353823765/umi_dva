@@ -11,5 +11,6 @@ export const theme = {
     '@primary-color': '#1DA57A',
     // 链接色
     '@link-color': ' #1890ff',
+   
   },
 };

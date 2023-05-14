@@ -4,7 +4,7 @@ import { useRequest } from 'node_modules/ahooks/lib/index';
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-13 16:54:54
+ * @LastEditTime: 2023-05-14 17:56:04
  * @FilePath: \umi_dva\src\app.ts
  */
 // layout运行时配置
@@ -29,11 +29,11 @@ export async function getInitialState() {
 //运行时layout配置，初始化状态initialState通过getInitialState方法透传给运行时配置layout
 //自定义layout渲染
 export const layout = ({ initialState }) => {
- console.log(initialState.isLogin); 
+//  console.log(initialState.isLogin); 
 
   const { location } = history,
   access_token=localStorage.getItem('access_token')
-  console.log(access_token)
+  // console.log(access_token)
 
  
 
@@ -75,7 +75,7 @@ export const request: RequestConfig = {
         const token = JSON.stringify(localStorage.getItem("access_token"))       ;
         //设置请求头+token认证
        
-      console.log();
+    
         const ADDheadersToken = {
           Authorization:`Bearer ${token.substring(1,token.length-1)}`
           ,
@@ -102,7 +102,7 @@ export const request: RequestConfig = {
     // 一个二元组，第一个元素是 request 拦截器，第二个元素是错误处理
     [
       (response) => {
-      console.log(response);
+      // console.log(response);
       
         // 不再需要异步处理读取返回体内容，可直接在data中读出，部分字段可在 config 中找到
         const { status,data} = response;
