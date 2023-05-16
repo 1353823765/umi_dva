@@ -14,10 +14,12 @@
     "@ant-design/icons": "^5.0.1",
     "@ant-design/pro-components": "^2.4.4",
     "@ant-design/pro-layout": "^7.12.1",
+    "@antv/g2": "^5.0.6",
     "@umijs/max": "^4.0.67",
     "ahooks": "^3.7.7",
     "antd": "^5.4.0",
     "axios": "^1.4.0",
+    "echarts": "^5.4.2",
     "mockjs": "^1.1.0",
     "umi-request": "^1.4.0",
     "webpackbar": "^5.0.2"

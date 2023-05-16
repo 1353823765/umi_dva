@@ -4,7 +4,7 @@ import { useRequest } from 'node_modules/ahooks/lib/index';
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-14 17:56:04
+ * @LastEditTime: 2023-05-15 14:26:17
  * @FilePath: \umi_dva\src\app.ts
  */
 // layout运行时配置
@@ -54,8 +54,10 @@ export const layout = ({ initialState }) => {
 
 }}
 export const request: RequestConfig = {
-  timeout: 1000,
   // other axios options you want
+  //限制请求接口时间,限制请求时间为1分钟
+  //超过一分钟显示错误信息
+ timeout: 60000,
   errorConfig: {
     //异常处理
     errorHandler,
@@ -74,11 +76,8 @@ export const request: RequestConfig = {
         //获取设置token
         const token = JSON.stringify(localStorage.getItem("access_token"))       ;
         //设置请求头+token认证
-       
-    
         const ADDheadersToken = {
           Authorization:`Bearer ${token.substring(1,token.length-1)}`
-          ,
         };
 
         return {
@@ -102,7 +101,7 @@ export const request: RequestConfig = {
     // 一个二元组，第一个元素是 request 拦截器，第二个元素是错误处理
     [
       (response) => {
-      // console.log(response);
+      //console.log(response);
       
         // 不再需要异步处理读取返回体内容，可直接在data中读出，部分字段可在 config 中找到
         const { status,data} = response;
@@ -117,4 +116,15 @@ export const request: RequestConfig = {
       },
     ],
   ],
+};
+//dva数据流错误信息配置
+export const dva = {
+  config: {
+    onError(e) {
+      //监控错误信息
+      console.log(e)
+      e.preventDefault();
+      console.error(e.message);
+    },
+  },
 };
