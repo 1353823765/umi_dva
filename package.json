@@ -15,6 +15,7 @@
     "@ant-design/pro-components": "^2.4.4",
     "@ant-design/pro-layout": "^7.12.1",
     "@antv/g2": "^5.0.6",
+    "@antv/g2plot": "^2.4.31",
     "@umijs/max": "^4.0.67",
     "ahooks": "^3.7.7",
     "antd": "^5.4.0",

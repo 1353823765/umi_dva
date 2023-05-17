@@ -4,7 +4,7 @@ import { useRequest } from 'node_modules/ahooks/lib/index';
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-15 14:26:17
+ * @LastEditTime: 2023-05-17 14:30:57
  * @FilePath: \umi_dva\src\app.ts
  */
 // layout运行时配置
@@ -55,9 +55,9 @@ export const layout = ({ initialState }) => {
 }}
 export const request: RequestConfig = {
   // other axios options you want
-  //限制请求接口时间,限制请求时间为1分钟
-  //超过一分钟显示错误信息
- timeout: 60000,
+  //限制请求接口时间,限制请求时间为30秒
+  //超过30秒显示错误信息
+ timeout: 30000,
   errorConfig: {
     //异常处理
     errorHandler,

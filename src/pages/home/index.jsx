@@ -1,11 +1,12 @@
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-16 17:02:09
+ * @LastEditTime: 2023-05-17 13:40:28
  * @FilePath: \umi_dva\src\pages\home\index.jsx
  */
 
-import { Chart } from '@antv/g2';
+import { Chart} from '@antv/g2';
+import { Column } from '@antv/g2plot';
 import {
   Avatar,
   Card,
@@ -17,7 +18,7 @@ import {
   Spin,
   Table,
 } from 'antd';
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { history, useDispatch, useSelector } from 'umi';
 import { items } from './helper';
 import './index.less';
@@ -51,6 +52,7 @@ const View = memo((props) => {
     [isModalOpen, setIsModalOpen] = useState(false),
     chartRef = useRef(''),
     chartRefgood = useRef(''),
+    chartReforder = useRef(''),
     name = table_list?.name,
     img = table_list?.avatar_url,
     createdTime = table_list?.created_at,
@@ -63,6 +65,7 @@ const View = memo((props) => {
     ordercount = home_data?.order_count,
     usersinfo = home_data?.users_info,
     goodsinfo = home_data?.goods_info,
+    orderinfo = home_data?.order_info,
     token = localStorage.getItem('access_token'),
     //用户信息usersinfo条形图
     userinfobar = [
@@ -96,6 +99,15 @@ const View = memo((props) => {
         letter: '推荐商品数量',
         frequency: goodsinfo?.recommend_nums,
       },
+    ],
+    //订单信息条形图
+   data = [
+      {"label": '今日销量', "type": '数量', "value": orderinfo?.today?.nums},
+      {"label": '今日销量', "type": '总金额', "value": orderinfo?.today?.total_price   },
+      { "label": '昨日销量', "type": '数量', "value": orderinfo?.yesterday?.nums },
+      {"label": '昨日销量', "type": '总金额', "value": orderinfo?.yesterday?.total_price  },
+      { "label": '总销量', "type": '数量', value: orderinfo?.total?.nums },
+      {"label": '总销量', "type": '总金额', value:   orderinfo?.total?.total_price }
     ],
     //table表格配置项
     dataSource = [
@@ -144,7 +156,7 @@ const View = memo((props) => {
     const chart = new Chart({
       width: 300, // 图表高度
       height: 300,
-      container: document.getElementById('chart'),
+      container: chartRef.current,
       encode: { x: 'letter', y: 'frequency' },
       theme: 'classic',
       autoFit: true,
@@ -163,7 +175,7 @@ const View = memo((props) => {
     const chart = new Chart({
       width: 300, // 图表高度
       height: 300,
-      container: document.getElementById('chartgood'),
+      container: chartRefgood.current,
       encode: { x: 'letter', y: 'frequency' },
       theme: 'classic',
       autoFit: true,
@@ -178,6 +190,37 @@ const View = memo((props) => {
     chart.render();
   }, [goodsinfobar]);
 
+
+useEffect(()=>{
+if(data[0].value!==undefined){
+  console.log(11111)
+  const  chart = new Column( chartReforder.current,
+    {
+      data,
+      seriesField: 'type',
+      // isStack: true,
+      isGroup:true,
+     xField: "label",
+     yField: 'value',
+     color: ['#1ca9e6', '#f88c24'],
+     minColumnWidth: 20,
+     label: {
+       // 可手动配置 label 数据标签位置
+      position: 'bottom',  //'top', 'bottom', 'middle'
+       // 可配置附加的布局方法
+       layout: [
+         // 柱形图数据标签位置自动调整
+         { type: 'interval-adjust-position' },
+         // 数据标签防遮挡
+         { type: 'interval-hide-overlap' },
+         // 数据标签文颜色自动调整
+         { type: 'adjust-color' },
+       ],
+     }
+   })
+   chart.render()
+}
+},[data])
   return (
     <div>
       <Dropdown
@@ -252,6 +295,15 @@ const View = memo((props) => {
                   id="chartgood"
                   style={{ height: '400px' }}
                   ref={chartRefgood}
+                />
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card style={{ marginTop: '30px' }} title="订单信息">
+                <div
+                  id="chartorder"
+                  style={{ height: '400px' }}
+                  ref={chartReforder}
                 />
               </Card>
             </Col>
