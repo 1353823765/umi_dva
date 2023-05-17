@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:10:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-15 14:55:09
+ * @LastEditTime: 2023-05-17 16:00:37
  * @FilePath: \umi_dva\config\config.js
  */
 
@@ -33,7 +33,7 @@ export default defineConfig({
   hash: true,
   //兼容性配置最高兼容到ie11
   targets: {
-    ie: 11,
+    // ie: 11,
   },
   //代理配置
   proxy,
