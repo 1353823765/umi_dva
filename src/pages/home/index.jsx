@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-17 13:40:28
+ * @LastEditTime: 2023-05-18 12:37:44
  * @FilePath: \umi_dva\src\pages\home\index.jsx
  */
 
@@ -192,7 +192,8 @@ const View = memo((props) => {
 
 
 useEffect(()=>{
-if(data[0].value!==undefined){
+  console.log(data)
+if(data[0]?.value!==undefined&&data[0]?.value=== orderinfo?.today?.nums){
   console.log(11111)
   const  chart = new Column( chartReforder.current,
     {
@@ -217,10 +218,13 @@ if(data[0].value!==undefined){
          { type: 'adjust-color' },
        ],
      }
-   })
-   chart.render()
+   })  
+    chart.render()
+
+
+
 }
-},[data])
+},[data[0].value])
   return (
     <div>
       <Dropdown
