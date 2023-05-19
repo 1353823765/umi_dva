@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-07 14:42:05
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-16 16:17:56
+ * @LastEditTime: 2023-05-19 14:02:11
  * @FilePath: \umi_dva\src\pages\home\model.js
  */
 
@@ -20,7 +20,7 @@ export default {
   //reducer
   reducers: {
     updataState: (state, { pyload }) => {
-      console.log(state, pyload);
+      // console.log(state, pyload);
       return { ...state, ...pyload };
     },
   },

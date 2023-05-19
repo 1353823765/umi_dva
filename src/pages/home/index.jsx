@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-18 12:37:44
+ * @LastEditTime: 2023-05-19 14:01:46
  * @FilePath: \umi_dva\src\pages\home\index.jsx
  */
 
@@ -192,9 +192,9 @@ const View = memo((props) => {
 
 
 useEffect(()=>{
-  console.log(data)
+  // console.log(data)
 if(data[0]?.value!==undefined&&data[0]?.value=== orderinfo?.today?.nums){
-  console.log(11111)
+  // console.log(11111)
   const  chart = new Column( chartReforder.current,
     {
       data,
