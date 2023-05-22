@@ -1,11 +1,11 @@
 /*
  * @Date: 2023-05-18 10:21:47
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-19 18:24:31
+ * @LastEditTime: 2023-05-22 17:49:03
  * @FilePath: \umi_dva\src\pages\user\index.jsx
  */
-import { Avatar, Button, Form, Input, Switch, Table, message } from 'antd';
-import { memo, useEffect, useState } from 'react';
+import { Avatar, Button, Form, Input, Switch, Table, message,Modal } from 'antd';
+import { memo, useEffect, useState ,useRef} from 'react';
 import { useDispatch, useSelector } from 'umi';
 import Banner from '../../components/banner';
 import { Tabledatalist } from './helper';
@@ -14,9 +14,12 @@ const View = memo(() => {
   const [form] = Form.useForm(),
     [, forceUpdate] = useState({}),
     [dataSource, setdataSource] = useState([]),
-    [isloading,setisloading]=useState(false),
+    [isModalOpen, setIsModalOpen] = useState(false),
+    [isloading, setIsLoading] = useState(false),
+    
+  
     dispatch = useDispatch(),
-    { tablelist, loading, messageinfo } = useSelector(
+    { tablelist, loading, messageinfo ,islock} = useSelector(
       (state) => state.user_list,
     ),
     { data } = tablelist,
@@ -62,22 +65,24 @@ const View = memo(() => {
   const onChange = (checked) => {
     console.log(`switch to ${checked}`);
   };
-// console.log(data)
+
   useEffect(() => {
     forceUpdate({});
   }, []);
-
+//table初始化数据
   useEffect(() => {
-    dispatch({ type: 'user_list/GET_LIST', pyload: false });
+    dispatch({ type: 'user_list/GET_LIST', pyload: {loading:false} });
+
   }, []);
+  //更新table数据
   useEffect(() => {
     setdataSource(Tabledatalist(data));
-  }, [loading]);
-  //搜索方法
-  const onFinish = (values) => {
-    dispatch({ type: 'user_list/SEARCH_LIST', pyload: {...values}});
-    console.log('Finish:', values);
+  }, [data]);
+  //查询table数据
+  const onFinish = (values) => { 
     const { name, email } = values;
+    dispatch({ type: 'user_list/SEARCH_LIST', pyload: {...values,islock:true}});
+    console.log('Finish:', values);
     if (name === undefined && email === undefined) {
       message.error(messageinfo);
     }
@@ -87,16 +92,36 @@ const View = memo(() => {
   };
   //重置
 const  onReset=()=>{
-
-  dispatch({ type: 'user_list/GET_LIST', pyload:null});
+  dispatch({ type: 'user_list/RESET_LIST',pyload:{islock:false}});
 }
-console.log("LOADING",loading)
+const showModal = () => {
+ 
+  setIsModalOpen(true);
+};
+//新建from表单提交验证
+const handleOk = async () => {
+ const values = await form.validateFields()
+  form.resetFields()
+  // console.log('Failed:',values);
+  setIsModalOpen(false);
+  dispatch({ type: 'user_list/ADD_LIST', pyload:values})
+dispatch({ type: 'user_list/GET_LIST',  pyload:{islock:true}})
+
+};
+const handleCancel = () => {
+  setIsModalOpen(false);
+};
+
+
+console.log("Loading",loading,islock)
+
+
   return (
     <div>
       <Banner name={'用户管理'}></Banner>
       <div className="main">
         <Form
-          form={form}
+       
           name="horizontal_login"
           layout="inline"
           onFinish={onFinish}
@@ -108,12 +133,7 @@ console.log("LOADING",loading)
           <Form.Item
             name="name"
             label="姓名"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: 'Please input your username!',
-            //   },
-            // ]}
+         
           >
             <Input placeholder="请输入" />
           </Form.Item>
@@ -136,7 +156,7 @@ console.log("LOADING",loading)
           </Form.Item>
           <Form.Item shouldUpdate>
             {() => (
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" onClick={showModal} >
                 新建
               </Button>
             )}
@@ -150,8 +170,66 @@ console.log("LOADING",loading)
           pagination={{ pageSize: 5 }}
           dataSource={dataSource}
           rowKey={(item) => item.email}
-        ></Table>
+        />
       </div>
+      <Modal title="添加用户" 
+      open={isModalOpen}
+      onOk={handleOk} 
+      onCancel={handleCancel}>
+      <Form
+      form={form}
+      name="basic"
+      autoComplete="off"
+    >
+      <Form.Item
+        label="姓名"
+        name="name"
+        rules={[
+          {
+            required: true,
+            message: '输入用户名',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        label="邮箱"
+        
+        name="email"
+        rules={[
+          {
+            required: true,
+            message: '输入邮箱地址',
+          },
+          
+            {
+              type: 'email',
+              message: '请输入正确的邮箱格式',
+            },
+        ]}
+      >
+        <Input/>
+      </Form.Item>
+      <Form.Item
+      label="密码"
+      name="password"
+      rules={[
+        {
+          required: true,
+          message: '输入密码',
+        },
+        
+      ]}
+    >
+      <Input.Password
+      />
+    </Form.Item>
+       <Form.Item 
+      >
+      </Form.Item>  
+    </Form>
+    </Modal>
     </div>
   );
 });

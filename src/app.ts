@@ -1,10 +1,11 @@
+import { createLoading } from 'C:/Users/Administrator/OneDrive/桌面/umi_dva/node_modules/dva-loading/dist/index.js';
 import { message } from 'antd';
 import { useRequest } from 'node_modules/ahooks/lib/index';
 
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-17 14:30:57
+ * @LastEditTime: 2023-05-22 17:38:20
  * @FilePath: \umi_dva\src\app.ts
  */
 // layout运行时配置
@@ -126,5 +127,10 @@ export const dva = {
       e.preventDefault();
       console.error(e.message);
     },
+    
+    
   },
 };
+
+
+

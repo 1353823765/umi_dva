@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-18 10:22:37
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-18 10:30:16
+ * @LastEditTime: 2023-05-22 14:16:45
  * @FilePath: \umi_dva\src\pages\user\service.js
  */
 
@@ -12,3 +12,14 @@ export const getuserlist=async()=>{
  
  return usersdatalist
 }
+export const getadduser=async(user)=>{
+  console.log(user)
+    const adduser=await request("/api/admin/users",{
+      method:"post",
+       data: user
+    }) 
+    console.log(adduser)
+ return  adduser
+}
+
+
