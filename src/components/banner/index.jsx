@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-18 10:36:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-23 14:29:26
+ * @LastEditTime: 2023-05-23 14:35:24
  * @FilePath: \umi_dva\src\components\banner\index.jsx
  */
 
