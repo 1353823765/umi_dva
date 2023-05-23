@@ -1,11 +1,11 @@
 /*
  * @Date: 2023-05-18 10:21:47
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-22 17:49:03
+ * @LastEditTime: 2023-05-23 14:31:06
  * @FilePath: \umi_dva\src\pages\user\index.jsx
  */
-import { Avatar, Button, Form, Input, Switch, Table, message,Modal } from 'antd';
-import { memo, useEffect, useState ,useRef} from 'react';
+import {  Avatar, Button,Form,  Input,  Switch,  Modal,  Table,  message,} from 'antd';
+import { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'umi';
 import Banner from '../../components/banner';
 import { Tabledatalist } from './helper';
@@ -16,10 +16,8 @@ const View = memo(() => {
     [dataSource, setdataSource] = useState([]),
     [isModalOpen, setIsModalOpen] = useState(false),
     [isloading, setIsLoading] = useState(false),
-    
-  
     dispatch = useDispatch(),
-    { tablelist, loading, messageinfo ,islock} = useSelector(
+    { tablelist, loading, messageinfo, islock, messagelock } = useSelector(
       (state) => state.user_list,
     ),
     { data } = tablelist,
@@ -46,8 +44,12 @@ const View = memo(() => {
         title: '是否禁用',
         dataIndex: 'is_locked',
         key: 'is_locked  ',
-        render: (item) => (
-          <Switch onChange={onChange} defaultChecked checked={item}></Switch>
+        render: (item, record) => (
+          //  console.log(item)
+          <Switch
+            onChange={() => onChangeSwitch(item, record)}
+            defaultChecked={record.is_locked === 0}
+          ></Switch>
         ),
       },
       {
@@ -57,31 +59,41 @@ const View = memo(() => {
       },
       {
         title: '编辑',
-        // dataIndex:"id",
-        // render:(item)=><a>{item}</a>
+        dataIndex:"id",
+        render:(item,record)=><a onClick={()=>{console.log(item,record)}}>编辑</a>
       },
     ];
   // 开关方法
-  const onChange = (checked) => {
-    console.log(`switch to ${checked}`);
+  const onChangeSwitch = (item, record) => {
+    console.log(item, record.id);
+    if (record.id === 2) {
+      message.warning('没有权限操作');
+    } else {
+      dispatch({ type: 'user_list/LOCK_LIST', pyload: record.id });
+      message.success(messagelock);
+    }
+
+    // console.log(`switch to ${record.id}`);
   };
 
   useEffect(() => {
     forceUpdate({});
   }, []);
-//table初始化数据
+  //table初始化数据
   useEffect(() => {
-    dispatch({ type: 'user_list/GET_LIST', pyload: {loading:false} });
-
+    dispatch({ type: 'user_list/GET_LIST', pyload: { loading: false } });
   }, []);
   //更新table数据
   useEffect(() => {
     setdataSource(Tabledatalist(data));
   }, [data]);
   //查询table数据
-  const onFinish = (values) => { 
+  const onFinish = (values) => {
     const { name, email } = values;
-    dispatch({ type: 'user_list/SEARCH_LIST', pyload: {...values,islock:true}});
+    dispatch({
+      type: 'user_list/SEARCH_LIST',
+      pyload: { ...values, islock: true },
+    });
     console.log('Finish:', values);
     if (name === undefined && email === undefined) {
       message.error(messageinfo);
@@ -91,37 +103,33 @@ const View = memo(() => {
     }
   };
   //重置
-const  onReset=()=>{
-  dispatch({ type: 'user_list/RESET_LIST',pyload:{islock:false}});
-}
-const showModal = () => {
- 
-  setIsModalOpen(true);
-};
-//新建from表单提交验证
-const handleOk = async () => {
- const values = await form.validateFields()
-  form.resetFields()
-  // console.log('Failed:',values);
-  setIsModalOpen(false);
-  dispatch({ type: 'user_list/ADD_LIST', pyload:values})
-dispatch({ type: 'user_list/GET_LIST',  pyload:{islock:true}})
+  const onReset = () => {
+    dispatch({ type: 'user_list/RESET_LIST', pyload: { islock: false } });
+  };
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  //新建from表单提交验证
+  const handleOk = async () => {
+    const values = await form.validateFields();
+    form.resetFields();
+    // console.log('Failed:',values);
+    setIsModalOpen(false);
 
-};
-const handleCancel = () => {
-  setIsModalOpen(false);
-};
+    dispatch({ type: 'user_list/ADD_LIST', pyload: values });
+    dispatch({ type: 'user_list/GET_LIST', pyload: { islock: true } });
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
-
-console.log("Loading",loading,islock)
-
+  console.log('Loading', loading, islock);
 
   return (
     <div>
-      <Banner name={'用户管理'}></Banner>
+      <Banner title='用户管理'></Banner>
       <div className="main">
         <Form
-       
           name="horizontal_login"
           layout="inline"
           onFinish={onFinish}
@@ -130,11 +138,7 @@ console.log("Loading",loading,islock)
             alignItems: 'center',
           }}
         >
-          <Form.Item
-            name="name"
-            label="姓名"
-         
-          >
+          <Form.Item name="name" label="姓名">
             <Input placeholder="请输入" />
           </Form.Item>
           <Form.Item name="email" label="邮箱">
@@ -156,7 +160,7 @@ console.log("Loading",loading,islock)
           </Form.Item>
           <Form.Item shouldUpdate>
             {() => (
-              <Button type="primary" onClick={showModal} >
+              <Button type="primary" onClick={showModal}>
                 新建
               </Button>
             )}
@@ -172,64 +176,57 @@ console.log("Loading",loading,islock)
           rowKey={(item) => item.email}
         />
       </div>
-      <Modal title="添加用户" 
-      open={isModalOpen}
-      onOk={handleOk} 
-      onCancel={handleCancel}>
-      <Form
-      form={form}
-      name="basic"
-      autoComplete="off"
-    >
-      <Form.Item
-        label="姓名"
-        name="name"
-        rules={[
-          {
-            required: true,
-            message: '输入用户名',
-          },
-        ]}
+      <Modal
+        title="添加用户"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
       >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label="邮箱"
-        
-        name="email"
-        rules={[
-          {
-            required: true,
-            message: '输入邮箱地址',
-          },
-          
-            {
-              type: 'email',
-              message: '请输入正确的邮箱格式',
-            },
-        ]}
-      >
-        <Input/>
-      </Form.Item>
-      <Form.Item
-      label="密码"
-      name="password"
-      rules={[
-        {
-          required: true,
-          message: '输入密码',
-        },
-        
-      ]}
-    >
-      <Input.Password
-      />
-    </Form.Item>
-       <Form.Item 
-      >
-      </Form.Item>  
-    </Form>
-    </Modal>
+        <Form form={form} name="basic" autoComplete="off">
+          <Form.Item
+            label="姓名"
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: '输入用户名',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="邮箱"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: '输入邮箱地址',
+              },
+
+              {
+                type: 'email',
+                message: '请输入正确的邮箱格式',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: '输入密码',
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item></Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 });

@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:10:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-18 10:23:12
+ * @LastEditTime: 2023-05-23 14:25:46
  * @FilePath: \umi_dva\config\routes.js
  */
 
@@ -34,5 +34,11 @@ export const routes = [
       component: '@/pages/user',
     
     },
+    {
+      name: '分类管理',
+      path: '/category',
+      component: '@/pages/category',
+
+    }
     
   ];

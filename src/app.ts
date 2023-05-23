@@ -5,7 +5,7 @@ import { useRequest } from 'node_modules/ahooks/lib/index';
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-22 17:38:20
+ * @LastEditTime: 2023-05-23 12:09:11
  * @FilePath: \umi_dva\src\app.ts
  */
 // layout运行时配置
@@ -127,7 +127,7 @@ export const dva = {
       e.preventDefault();
       console.error(e.message);
     },
-    
+  
     
   },
 };
