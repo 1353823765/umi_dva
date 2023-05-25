@@ -1,21 +1,26 @@
 /*
  * @Date: 2023-05-18 10:21:47
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-23 14:31:06
+ * @LastEditTime: 2023-05-25 13:27:17
  * @FilePath: \umi_dva\src\pages\user\index.jsx
  */
-import {  Avatar, Button,Form,  Input,  Switch,  Modal,  Table,  message,} from 'antd';
-import { memo, useEffect, useState } from 'react';
+import {  Avatar, Button,Form,  Input,  Switch,  Table,  message,} from 'antd';
+import { memo, useEffect, useState,useRef } from 'react';
 import { useDispatch, useSelector } from 'umi';
 import Banner from '../../components/banner';
 import { Tabledatalist } from './helper';
+import UserEditModal from './user_edit_modal';
+import UserModal from './user_modal';
 import './index.less';
 const View = memo(() => {
-  const [form] = Form.useForm(),
-    [, forceUpdate] = useState({}),
+  const 
+    [, forceUpdate] = useState({}), 
+    // userEditRef=useRef()
     [dataSource, setdataSource] = useState([]),
     [isModalOpen, setIsModalOpen] = useState(false),
-    [isloading, setIsLoading] = useState(false),
+    [EditModalOpen,setEditModalOpen]=useState(false),
+    inputinfo=useRef(null),
+    showinfo=useRef(),
     dispatch = useDispatch(),
     { tablelist, loading, messageinfo, islock, messagelock } = useSelector(
       (state) => state.user_list,
@@ -27,7 +32,7 @@ const View = memo(() => {
         title: '头像',
         dataIndex: 'avatar_url',
         key: 'avatar_url',
-        render: (item) => <Avatar src={item}></Avatar>,
+        render: (item) => <Avatar src={item}/>,
       },
       {
         title: '姓名',
@@ -49,7 +54,7 @@ const View = memo(() => {
           <Switch
             onChange={() => onChangeSwitch(item, record)}
             defaultChecked={record.is_locked === 0}
-          ></Switch>
+          />
         ),
       },
       {
@@ -60,22 +65,20 @@ const View = memo(() => {
       {
         title: '编辑',
         dataIndex:"id",
-        render:(item,record)=><a onClick={()=>{console.log(item,record)}}>编辑</a>
+        render:(item,record)=><a onClick={()=>
+          showUpdateModal(record)}>编辑</a>
       },
     ];
   // 开关方法
   const onChangeSwitch = (item, record) => {
-    console.log(item, record.id);
+  //  console.log(item, record.id);
     if (record.id === 2) {
       message.warning('没有权限操作');
     } else {
       dispatch({ type: 'user_list/LOCK_LIST', pyload: record.id });
       message.success(messagelock);
     }
-
-    // console.log(`switch to ${record.id}`);
   };
-
   useEffect(() => {
     forceUpdate({});
   }, []);
@@ -94,7 +97,7 @@ const View = memo(() => {
       type: 'user_list/SEARCH_LIST',
       pyload: { ...values, islock: true },
     });
-    console.log('Finish:', values);
+    // console.log('Finish:', values);
     if (name === undefined && email === undefined) {
       message.error(messageinfo);
     }
@@ -106,25 +109,15 @@ const View = memo(() => {
   const onReset = () => {
     dispatch({ type: 'user_list/RESET_LIST', pyload: { islock: false } });
   };
+  //新建模态框显示状态
   const showModal = () => {
     setIsModalOpen(true);
   };
-  //新建from表单提交验证
-  const handleOk = async () => {
-    const values = await form.validateFields();
-    form.resetFields();
-    // console.log('Failed:',values);
-    setIsModalOpen(false);
-
-    dispatch({ type: 'user_list/ADD_LIST', pyload: values });
-    dispatch({ type: 'user_list/GET_LIST', pyload: { islock: true } });
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  console.log('Loading', loading, islock);
-
+//UserEditModal子组件传过来的方法用于回显表单数据
+  const showUpdateModal=(record)=>{
+   showinfo.current.showEditModal(record)
+  
+  }
   return (
     <div>
       <Banner title='用户管理'></Banner>
@@ -166,7 +159,6 @@ const View = memo(() => {
             )}
           </Form.Item>
         </Form>
-
         <Table
           style={{ marginTop: '10px' }}
           columns={columns}
@@ -176,57 +168,18 @@ const View = memo(() => {
           rowKey={(item) => item.email}
         />
       </div>
-      <Modal
-        title="添加用户"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Form form={form} name="basic" autoComplete="off">
-          <Form.Item
-            label="姓名"
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: '输入用户名',
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="邮箱"
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: '输入邮箱地址',
-              },
-
-              {
-                type: 'email',
-                message: '请输入正确的邮箱格式',
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="密码"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: '输入密码',
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item></Form.Item>
-        </Form>
-      </Modal>
+      {/* 新建弹窗 */}
+      <UserModal  
+      isModalOpen={isModalOpen}
+      setIsModalOpen={setIsModalOpen}
+      />
+      {/* 编辑弹窗 */}
+     <UserEditModal 
+     showinfo={showinfo}
+     inputinfo={ inputinfo}
+     EditModalOpen={EditModalOpen}
+     setEditModalOpen={setEditModalOpen}
+     />
     </div>
   );
 });

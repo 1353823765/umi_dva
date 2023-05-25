@@ -1,11 +1,11 @@
 /*
  * @Date: 2023-05-18 10:22:37
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-23 13:22:21
+ * @LastEditTime: 2023-05-25 13:29:19
  * @FilePath: \umi_dva\src\pages\user\model.js
  */
 
-import { getadduser, getlockuser, getuserlist } from './service';
+import { getadduser, getedituser, getlockuser, getuserlist } from './service';
 const initial_state = {
   tablelist: {},
   loading: true,
@@ -25,7 +25,7 @@ export default {
   effects: {
     //获取table列表数据
     *GET_LIST({ pyload }, { put, call }) {
-      console.log('GET_LIST', pyload);
+      // console.log('GET_LIST', pyload);
       const data = yield call(getuserlist);
       //  console.log(data)
       yield put({
@@ -39,9 +39,8 @@ export default {
     },
     //搜索查询数据
     *SEARCH_LIST({ pyload }, { put, call }) {
-      console.log('SEARCH_LIST', pyload);
+      // console.log('SEARCH_LIST', pyload);
       const data = yield call(getuserlist);
-
       const { name, email, loading } = pyload;
       if (name === undefined && email === undefined) {
         yield put({
@@ -65,7 +64,7 @@ export default {
     },
     //重置数据
     *RESET_LIST({ pyload }, { put, call }) {
-      console.log(pyload);
+      // console.log(pyload);
       const data = yield call(getuserlist);
       yield put({
         type: 'updataState',
@@ -74,12 +73,12 @@ export default {
     },
     //新增数据
     *ADD_LIST({ pyload }, { put, call }) {
-      console.log(pyload);
+      // console.log(pyload);
       //添加新增数据
       getadduser(pyload);
       //获取更新数据
       const data = yield call(getuserlist);
-      console.log(data);
+      // console.log(data);
       yield put({
         type: 'updataState',
         pyload: { tablelist: data },
@@ -87,10 +86,23 @@ export default {
     },
     //启用禁用
     *LOCK_LIST({ pyload }, { put, call }) {
+      // console.log(pyload)
       yield getlockuser(pyload);
       yield put({
         type: 'updataState',
         pyload: { messagelock: initial_state.messagelock },
+      });
+    },
+    //修改数据
+    *EDIT_LIST({ pyload }, { put, call }) {
+      const { id, user } = pyload;
+      //修改数据接口
+      yield getedituser(id, user);
+      //获取修改后的数据接口
+      const data = yield call(getuserlist);
+      yield put({
+        type: 'updataState',
+        pyload: { tablelist: data },
       });
     },
   },
