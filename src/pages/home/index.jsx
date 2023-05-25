@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-19 14:01:46
+ * @LastEditTime: 2023-05-25 14:12:59
  * @FilePath: \umi_dva\src\pages\home\index.jsx
  */
 
@@ -18,7 +18,7 @@ import {
   Spin,
   Table,
 } from 'antd';
-import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { memo, useEffect,  useRef, useState } from 'react';
 import { history, useDispatch, useSelector } from 'umi';
 import { items } from './helper';
 import './index.less';
