@@ -5,7 +5,7 @@ import { useRequest } from 'node_modules/ahooks/lib/index';
 /*
  * @Date: 2023-04-29 18:09:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-23 12:09:11
+ * @LastEditTime: 2023-05-26 16:17:39
  * @FilePath: \umi_dva\src\app.ts
  */
 // layout运行时配置
@@ -49,10 +49,7 @@ export const layout = ({ initialState }) => {
    if(access_token===null){
     history.push('/login');
    }
- 
 }
-
-
 }}
 export const request: RequestConfig = {
   // other axios options you want
@@ -103,12 +100,9 @@ export const request: RequestConfig = {
     [
       (response) => {
       //console.log(response);
-      
         // 不再需要异步处理读取返回体内容，可直接在data中读出，部分字段可在 config 中找到
         const { status,data} = response;
         // console.log(data.access_token)
-
-
         if(status===200&&data.access_token){
           history.push("./")
            localStorage.setItem('access_token', data.access_token)
@@ -127,8 +121,6 @@ export const dva = {
       e.preventDefault();
       console.error(e.message);
     },
-  
-    
   },
 };
 

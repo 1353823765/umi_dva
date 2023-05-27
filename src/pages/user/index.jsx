@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-18 10:21:47
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-25 13:27:17
+ * @LastEditTime: 2023-05-25 16:14:42
  * @FilePath: \umi_dva\src\pages\user\index.jsx
  */
 import {  Avatar, Button,Form,  Input,  Switch,  Table,  message,} from 'antd';
@@ -122,6 +122,7 @@ const View = memo(() => {
     <div>
       <Banner title='用户管理'></Banner>
       <div className="main">
+      
         <Form
           name="horizontal_login"
           layout="inline"

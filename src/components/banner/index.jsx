@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-18 10:36:52
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-23 14:35:24
+ * @LastEditTime: 2023-05-25 16:15:23
  * @FilePath: \umi_dva\src\components\banner\index.jsx
  */
 
@@ -26,7 +26,7 @@ const Banner= memo((props) => {
 
 
  
-    <h3>{name}</h3>
+    <h3>{title}</h3>
     </div>
   )
 })
