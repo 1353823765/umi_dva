@@ -1,10 +1,10 @@
 /*
  * @Date: 2023-05-23 14:23:01
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-27 16:32:39
+ * @LastEditTime: 2023-05-28 17:32:30
  * @FilePath: \umi_dva\src\pages\category\index.jsx
  */
-import { Button, Form, Image, Input, Switch, Table } from 'antd';
+import { Button, Form, Image, Input, message, Switch, Table } from 'antd';
 import { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'umi';
 import Banner from '../../components/banner';
@@ -13,7 +13,7 @@ import './index.less';
 const View = memo(() => {
   const dispatch = useDispatch(),
     [dataSource, setdataSource] = useState([]),
-    { table_list, loading } = useSelector((state) => state.category_list),
+    { table_list, loading ,messageinfo} = useSelector((state) => state.category_list),
     { data } = table_list,
     columns = [
       {
@@ -49,8 +49,8 @@ const View = memo(() => {
         render: (item, record) => (
           //  console.log(item)
           <Switch
-            onChange={() => console.log(record)}
-            // defaultChecked={record.is_locked === 0}
+            onChange={() => onChangeIsOn(record.id)}
+             defaultChecked={record.is_on=== 1}
           />
         ),
       },
@@ -59,10 +59,10 @@ const View = memo(() => {
         dataIndex: 'is_recommend',
         key: 'is_on ',
         render: (item, record) => (
-          //  console.log(item)
+          
           <Switch
-            onChange={() => console.log(record)}
-            // defaultChecked={record.is_locked === 0}
+            onChange={() => onChangeRecommend(record.id)}
+             defaultChecked={record.is_recommend === 1}
           />
         ),
       },
@@ -80,8 +80,11 @@ const View = memo(() => {
       },
     ];
 
-  const onFinish = () => {
-    console.log('onFinish');
+  const onFinish = (values) => {  
+      console.log('onFinish',values);
+    dispatch({type: 'category_list/SEARCH_LIST',pyload:{...values}})
+
+
   };
   const onReset = () => {
     console.log('onReset');
@@ -89,14 +92,26 @@ const View = memo(() => {
   const showModal = () => {
     console.log('showModal');
   };
-  //初始化数据
+  //是否上架
+  const onChangeIsOn=(id)=>{
+   dispatch({type:"category_list/ISON_LIST",pyload:id})
+   message.success(messageinfo)
+  }
+  //是否推荐
+  const onChangeRecommend=(id)=>{
+dispatch({type:"category_list/RECOMMEND_LIST",pyload:id})
+message.success(messageinfo)
+  }
+
+
+  //初始化table数据
   useEffect(() => {
     dispatch({ type: 'category_list/GET_LIST', pyload: false });
   }, []);
-  //更新数据
-  useEffect(() => {
+  //更新table数据
+  useEffect(() => { 
     setdataSource(Tabledatalist(data));
-    console.log(dataSource);
+ console.log(data)
   }, [data]);
 
   return (
@@ -112,7 +127,7 @@ const View = memo(() => {
             alignItems: 'center',
           }}
         >
-          <Form.Item name="name" label="标题">
+          <Form.Item name="title" label="标题">
             <Input placeholder="请输入" />
           </Form.Item>
           {/*  <Form.Item name="email" label="邮箱">
