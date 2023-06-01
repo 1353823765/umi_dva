@@ -1,14 +1,15 @@
 /*
  * @Date: 2023-05-23 14:23:28
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-28 17:34:46
+ * @LastEditTime: 2023-06-01 19:06:14
  * @FilePath: \umi_dva\src\pages\category\model.js
  */
-import { getshoplist, getshopison, getshoprecommend } from "./service"
+import { getshoplist, getshopison, getshoprecommend,getshopgroup} from "./service"
 const initial_state = {
   table_list: {},
   loading: true,
-  messageinfo: "修改成功"
+  messageinfo: "修改成功",
+  create_list:{}
 };
 
 export default {
@@ -25,7 +26,7 @@ export default {
   effects: {
     //获取初始化数据
     *GET_LIST({ pyload }, { put, call }) {
-      console.log(pyload)
+      // console.log(pyload)
       const data = yield call(getshoplist)
       yield put({
         type: "updataState", pyload: {
@@ -58,7 +59,6 @@ export default {
     },
     //查询数据
     *SEARCH_LIST({ pyload }, { put, call }) {
-      console.log(pyload.title)
       const { data } = yield call(getshoplist)
       const newdatalist = data?.filter((item, index) => {
         if (item.title === pyload.title) {
@@ -68,14 +68,31 @@ export default {
       yield put({
         type: 'updataState',
         pyload: {
-          tablelist: newdatalist,
+          table_list:{data:newdatalist},
         },
       });
-
-
-
-
-    }
+    },
+    //重置功能
+     *RESET_LIST({ pyload }, { put, call }) {
+      const data = yield call(getshoplist)
+      yield put({
+        type: "updataState", pyload: {
+         
+          table_list: data
+        }
+      })
+     },
+     //获取新建列表数据
+     *GET_CREATELIST({ pyload }, { put, call }) {
+      const data=yield call(getshopgroup)
+    //  console.log(data)
+     yield put({
+      type: "updataState", pyload: {
+      
+        create_list  : data
+      }
+    })
+      }
 
 
 

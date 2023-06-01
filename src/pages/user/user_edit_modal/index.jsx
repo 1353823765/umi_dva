@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-24 15:09:45
  * @LastEditors: jinyuan
- * @LastEditTime: 2023-05-25 13:31:02
+ * @LastEditTime: 2023-06-01 19:15:25
  * @FilePath: \umi_dva\src\pages\user\user_edit_modal\index.jsx
  */
 import React, { memo,useImperativeHandle } from 'react'
@@ -43,7 +43,7 @@ const UserEditModal = memo((props) => {
     form.resetFields();
   };
   return (
-    <div> 
+    <> 
           <Modal title="编辑"
            open={EditModalOpen}
            onOk={handleEditOk} 
@@ -80,7 +80,7 @@ const UserEditModal = memo((props) => {
         </Form.Item>
       </Form>
     </Modal>
-    </div>
+    </>
   )
 })
 

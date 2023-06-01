@@ -4,7 +4,6 @@
  * @LastEditTime: 2023-05-25 16:15:23
  * @FilePath: \umi_dva\src\components\banner\index.jsx
  */
-
 import React, { memo } from 'react'
  import {history} from "umi"
  import {bannerlist} from "./helper"
@@ -20,15 +19,10 @@ const Banner= memo((props) => {
       onClick={()=>{history.push(item.path)}}
        className={title===item.title?"span_state":""}>
       {item.title}</span>
-
       )
      }
-
-
- 
     <h3>{title}</h3>
     </div>
   )
 })
-
 export default  Banner
